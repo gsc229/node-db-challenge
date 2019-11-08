@@ -17,8 +17,9 @@ function findProjects() {
 
 function findProject(proj_id) {
   return db('projects')
+
     .where({ id: proj_id })
-    .first();
+    .first()
 
 }
 

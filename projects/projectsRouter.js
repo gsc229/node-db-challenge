@@ -60,10 +60,11 @@ router.post('/resources', (req, res) => {
 })
 
 router.get('/:id', (req, res) => {
-  const proj_id = req.params.id
+  const proj_id = req.params.id;
+
   Projects.findProject(proj_id)
     .then(proj => {
-      proj.completed = proj.completed ? true : false
+      proj.completed = proj.completed ? true : false;
       res.status(200).json(proj)
     })
     .catch(err => {
@@ -71,14 +72,34 @@ router.get('/:id', (req, res) => {
     });
 })
 
-router.get('/:id/tasks', (req, res) => {
+
+router.get('/:id/with-tasks', (req, res) => {
   const proj_id = req.params.id;
+  let projTasks;
   Projects.getProjectTasks(proj_id)
     .then(tasks => {
       tasks.forEach(task => {
         task.completed = task.completed ? true : false
       })
+      projTasks = tasks
 
+      Projects.findProject(proj_id)
+        .then(proj => {
+          console.log(projTasks);
+          proj.tasks = projTasks;
+          res.status(200).json(proj);
+        })
+    })
+})
+
+router.get('/:id/tasks', (req, res) => {
+  Projects.getProjectTasks(proj_id)
+    .then(tasks => {
+
+      tasks.forEach(task => {
+        task.completed = task.completed ? true : false
+      })
+      console.log(tasks);
       res.status(200).json(tasks);
     })
     .catch(err => {
