@@ -1,13 +1,35 @@
 const db = require('../db-config');
 
 module.exports = {
-  findProjects
+  findProjects,
+  findProject,
+  getProjectTasks,
+  getAllResources
 }
 
 
 function findProjects() {
   return db('projects')
 }
+
+function findProject(proj_id) {
+  return db('projects')
+    .where({ id: proj_id })
+    .first();
+
+}
+
+function getProjectTasks(proj_id) {
+  return db('projects')
+    .join('tasks', 'tasks.proj_id', 'projects.id')
+    .select('projects.project_name', 'projects.description', 'tasks.task_description', 'tasks.completed', 'tasks.id')
+    .where({ 'proj_id': proj_id })
+}
+
+function getAllResources() {
+  return db('resources')
+}
+
 
 /*
 ENDPOINTS:

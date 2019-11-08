@@ -11,7 +11,7 @@ exports.up = function (knex) {
       col.increments()
       col.integer('step_num').notNullable();
       col.integer('proj_id').notNullable().unsigned().references('id').inTable('projects').onDelete("CASCADE").onUpdate("CASCADE");
-      col.string('description', 255).notNullable().unique();
+      col.string('task_description', 255).notNullable().unique();
       col.string('notes', 255)
       col.boolean('completed').notNullable().defaultTo(false);
 
