@@ -6,6 +6,9 @@ const router = express.Router();
 router.get('/', (req, res) => {
   Projects.findProjects()
     .then(projs => {
+      projs.forEach(proj => {
+        proj.completed = proj.completed ? true : false
+      })
       res.status(200).json(projs);
     })
     .catch(err => {
@@ -35,9 +38,6 @@ router.post('/task', (req, res) => {
     });
 })
 
-
-
-
 router.get('/resources', (req, res) => {
   Projects.getAllResources()
     .then(resources => {
@@ -63,6 +63,7 @@ router.get('/:id', (req, res) => {
   const proj_id = req.params.id
   Projects.findProject(proj_id)
     .then(proj => {
+      proj.completed = proj.completed ? true : false
       res.status(200).json(proj)
     })
     .catch(err => {
@@ -74,6 +75,10 @@ router.get('/:id/tasks', (req, res) => {
   const proj_id = req.params.id;
   Projects.getProjectTasks(proj_id)
     .then(tasks => {
+      tasks.forEach(task => {
+        task.completed = task.completed ? true : false
+      })
+
       res.status(200).json(tasks);
     })
     .catch(err => {
@@ -91,11 +96,11 @@ module.exports = router;
 ENDPOINTS:
  Design the data model and use knex migrations to create the database and tables.
  Build an API with endpoints for:
- 1. adding resources.
+ 1. adding resources. --
  2. retrieving a list of resources. --
- 3. adding projects.
+ 3. adding projects. --
  4. retrieving a list of projects. --
- 5. adding tasks.
+ 5. adding tasks. --
  6. retrieving a list of tasks. The list of tasks should  include the project name and      project description.
  When returning project or task information, the completed property should be true or false. -- ~
 
