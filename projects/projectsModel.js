@@ -1,5 +1,13 @@
 const db = require('../db-config');
 
+module.exports = {
+  findProjects
+}
+
+
+function findProjects() {
+  return db('projects')
+}
 
 /*
 ENDPOINTS:
