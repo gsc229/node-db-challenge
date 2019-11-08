@@ -13,10 +13,46 @@ router.get('/', (req, res) => {
     });
 })
 
+router.post('/', (req, res) => {
+  const newProject = req.body;
+  Projects.addProject(newProject)
+    .then(info => {
+      res.status(201).json(info);
+    })
+    .catch(err => {
+      res.status(500).json({ message: 'Failed to create projects' });
+    });
+})
+
+router.post('/task', (req, res) => {
+  const newTask = req.body;
+  Projects.addTask(newTask)
+    .then(info => {
+      res.status(201).json(info);
+    })
+    .catch(err => {
+      res.status(500).json({ message: 'Failed to create task' });
+    });
+})
+
+
+
+
 router.get('/resources', (req, res) => {
   Projects.getAllResources()
     .then(resources => {
       res.status(200).json(resources)
+    })
+    .catch(err => {
+      res.status(500).json({ message: 'Failed to get resources' });
+    });
+})
+
+router.post('/resources', (req, res) => {
+  const newResource = req.body;
+  Projects.addResource(newResource)
+    .then(info => {
+      res.status(201).json(info)
     })
     .catch(err => {
       res.status(500).json({ message: 'Failed to get resources' });
@@ -56,11 +92,11 @@ ENDPOINTS:
  Design the data model and use knex migrations to create the database and tables.
  Build an API with endpoints for:
  1. adding resources.
- 2. retrieving a list of resources.
+ 2. retrieving a list of resources. --
  3. adding projects.
- 4. retrieving a list of projects.
+ 4. retrieving a list of projects. --
  5. adding tasks.
- 6. retrieving a list of tasks. The list of tasks should include the project name and      project description.
- When returning project or task information, the completed property should be true or false.
+ 6. retrieving a list of tasks. The list of tasks should  include the project name and      project description.
+ When returning project or task information, the completed property should be true or false. -- ~
 
 */

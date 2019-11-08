@@ -4,7 +4,10 @@ module.exports = {
   findProjects,
   findProject,
   getProjectTasks,
-  getAllResources
+  getAllResources,
+  addResource,
+  addTask,
+  addProject
 }
 
 
@@ -28,6 +31,21 @@ function getProjectTasks(proj_id) {
 
 function getAllResources() {
   return db('resources')
+}
+
+function addResource(newResource) {
+  return db('resources')
+    .insert(newResource);
+}
+
+function addTask(newTask) {
+  return db('tasks')
+    .insert(newTask)
+}
+
+function addProject(newPrject) {
+  return db('projects')
+    .insert(newPrject);
 }
 
 
